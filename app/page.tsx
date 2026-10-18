@@ -13,7 +13,6 @@ export default function Home() {
     await animerScale();
     await animerColor();
     await animerOpacity();
-
   };
 
   const animer = async (elementId:string, keyframes: Keyframe[]) => {
@@ -71,8 +70,100 @@ export default function Home() {
     await animer(`opacity`, opacityKeyframes);
   };
 
-  const bounceMe = () => {
-    // Bounce animation logic
+  const animerAvecOffsets = async () => {
+    await animerOffset1();
+    await animerOffset2();
+    await animerOffset3();
+    await animerOffset4();
+  };
+
+  const animerOffset1 = async () => {
+    const translationKeyframes: Keyframe[] = [
+      { transform: 'translateX(0%)'},
+      { transform: 'translateX(100%)', offset: 0.5 },
+      { transform: 'translateX(0%)'}
+    ];
+
+    await animer(`offset1`, translationKeyframes);
+  };
+
+  const animerOffset2 = async () => {
+    const translationKeyframes: Keyframe[] = [
+      { transform: 'translateX(0%)', offset: 0 },
+      { transform: 'translateX(100%)', offset: 0.75 },
+      { transform: 'translateX(0%)', offset: 1 }
+    ];
+
+    await animer(`offset2`, translationKeyframes);
+  };
+
+  const animerOffset3 = async () => {
+    const translationKeyframes: Keyframe[] = [
+      { transform: 'translateX(0%)', offset: 0 },
+      { transform: 'translateX(100%)', offset: 0.9 },
+      { transform: 'translateX(0%)', offset: 1 }
+    ];
+
+    await animer(`offset3`, translationKeyframes);
+  };
+
+  const animerOffset4 = async () => {
+    const translationKeyframes: Keyframe[] = [
+      { transform: 'translateX(0%)', offset: 0 },
+      { transform: 'translateX(50%)', offset: 0.4 },
+      { transform: 'translateX(100%)', offset: 0.5 },
+      { transform: 'translateX(50%)', offset: 0.6 },
+      { transform: 'translateX(0%)', offset: 1 }
+    ];
+
+    await animer(`offset4`, translationKeyframes);
+  };
+
+  const animerAvecEase = async () => {
+    animerEase1();
+    animerEase2();
+    animerEase3();
+    animerEase4();
+  };
+
+  const animerEase1 = async () => {
+    const translationKeyframes: Keyframe[] = [
+      { transform: 'translateX(0%)'},
+      { transform: 'translateX(100%)' },
+      { transform: 'translateX(0%)'}
+    ];
+
+    await animer(`ease1`, translationKeyframes);
+  };
+
+  const animerEase2 = async () => {
+    const translationKeyframes: Keyframe[] = [
+      { transform: 'translateX(0%)', easing: 'ease-in-out' },
+      { transform: 'translateX(100%)', easing: 'ease-in-out' },
+      { transform: 'translateX(0%)', easing: 'ease-in-out' }
+    ];
+
+    await animer(`ease2`, translationKeyframes);
+  };
+
+  const animerEase3 = async () => {
+    const translationKeyframes: Keyframe[] = [
+      { transform: 'translateX(0%)', easing: 'ease-out' },
+      { transform: 'translateX(100%)', easing: 'ease-in-out' },
+      { transform: 'translateX(0%)', easing: 'ease-in' }
+    ];
+
+    await animer(`ease3`, translationKeyframes);
+  };
+
+  const animerEase4 = async () => {
+    const translationKeyframes: Keyframe[] = [
+      { transform: 'translateX(0%)' },
+      { transform: 'translateX(100%)', easing: "steps(3, jump-none)" },
+      { transform: 'translateX(0%)' }
+    ];
+
+    await animer(`ease4`, translationKeyframes);
   };
 
   return (
@@ -80,21 +171,67 @@ export default function Home() {
       <div className="p-2">
         <h1 className="mb-8">Animations</h1>
         <Button className="mr-2" onClick={toutAnimer}>Tout Animer</Button>
-        <Button onClick={bounceMe}>Bounce</Button>
-        <CarreAvecFleche id="translate" />
-        <CarreAvecFleche id="rotate" />
-        <CarreAvecFleche id="scale" />
-        <CarreAvecFleche id="color" />
-        <CarreAvecFleche id="opacity" />
+        <div className="flex items-center">
+          <span className="w-28 text-right pr-2">Translation</span>
+          <CarreAvecFleche id="translate" />
+        </div>
+        <div className="flex items-center">
+          <span className="w-28 text-right pr-2">Rotation</span>
+          <CarreAvecFleche id="rotate" />
+        </div>
+        <div className="flex items-center">
+          <span className="w-28 text-right pr-2">Échelle</span>
+          <CarreAvecFleche id="scale" />
+        </div>
+        <div className="flex items-center">
+          <span className="w-28 text-right pr-2">Couleur</span>
+          <CarreAvecFleche id="color" />
+        </div>
+        <div className="flex items-center">
+          <span className="w-28 text-right pr-2">Opacité</span>
+          <CarreAvecFleche id="opacity" />
+        </div>
       </div>
       <div className="p-2">
-        <Button className="mr-2">Shake2</Button>
-        <Button >Bounce</Button>
-        <div className="h-24 w-24 bg-red-500 m-5"></div>
+        <Button className="mr-2" onClick={animerAvecOffsets}>Comprendre les offsets</Button>
+        <div className="flex items-center">
+          <span className="w-28 text-right pr-2">0.5 (par défaut)</span>
+          <CarreAvecFleche id="offset1" />
+        </div>
+        <div className="flex items-center">
+          <span className="w-28 text-right pr-2">0.75</span>
+          <CarreAvecFleche id="offset2" />
+        </div>
+        <div className="flex items-center">
+          <span className="w-28 text-right pr-2">0.9</span>
+          <CarreAvecFleche id="offset3" />
+        </div>
+        <div className="flex items-center">
+          <span className="w-28 text-right pr-2">Accélération au centre</span>
+          <CarreAvecFleche id="offset4" />
+        </div>
       </div>
-      <div className="flex min-h-svh items-center justify-center">
-        <Button>Click me</Button>
+
+      <div className="p-2">
+        <Button className="mr-2" onClick={animerAvecEase}>Comprendre le ease</Button>
+        <div className="flex items-center">
+          <span className="w-28 text-right pr-2">0.5 (par défaut)</span>
+          <CarreAvecFleche id="ease1" />
+        </div>
+        <div className="flex items-center">
+          <span className="w-28 text-right pr-2">0.75</span>
+          <CarreAvecFleche id="ease2" />
+        </div>
+        <div className="flex items-center">
+          <span className="w-28 text-right pr-2">0.9</span>
+          <CarreAvecFleche id="ease3" />
+        </div>
+        <div className="flex items-center">
+          <span className="w-28 text-right pr-2">Accélération au centre</span>
+          <CarreAvecFleche id="ease4" />
+        </div>
       </div>
+      
     </div>
   );
 }
