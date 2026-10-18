@@ -28,15 +28,14 @@ export default function Home() {
   return (
     <div>
       <div className="p-2">
-        <h1>Animation CSS</h1>
+        <h1 className="mb-8">Animations</h1>
         <Button className="mr-2" onClick={shakeMe}>Shake</Button>
         <Button onClick={bounceMe}>Bounce</Button>
         <div id="carreBleu" className="h-24 w-24 bg-blue-500 m-5"></div>
       </div>
       <div className="p-2">
-        <h1>Animation Angular</h1>
-        <Button variant="secondary" className="mr-2">Shake2</Button>
-        <Button variant="default">Bounce</Button>
+        <Button className="mr-2">Shake2</Button>
+        <Button >Bounce</Button>
         <div className="h-24 w-24 bg-red-500 m-5"></div>
       </div>
       <div className="flex min-h-svh items-center justify-center">
