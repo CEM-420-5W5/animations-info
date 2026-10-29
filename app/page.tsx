@@ -166,6 +166,22 @@ export default function Home() {
     await animer(`ease4`, translationKeyframes);
   };
 
+  // fill: 'forwards' garde l'état final de l'animation après sa fin
+  const animerAvecFill = async () => {
+    const element = document.getElementById(`forward`);
+
+    const keyframes: Keyframe[] = [
+      { transform: 'translateX(0%) rotate(0deg)' },
+      { transform: 'translateX(100%) rotate(180deg)' }
+    ];
+
+    const animation = element?.animate(keyframes, {
+      duration: ANIMATION_DURATION_MS,
+      fill: 'forwards'
+    });
+    await animation?.finished;
+  };
+
   return (
     <div>
       <div className="p-2">
@@ -227,8 +243,16 @@ export default function Home() {
           <CarreAvecFleche id="ease3" />
         </div>
         <div className="flex items-center">
-          <span className="w-28 text-right pr-2">Accélération au centre</span>
+          <span className="w-28 text-right pr-2">Ease4 (steps)</span>
           <CarreAvecFleche id="ease4" />
+        </div>
+      </div>
+
+      <div className="p-2">
+        <Button className="mr-2" onClick={animerAvecFill}>Garder la position (forwards)</Button>
+        <div className="flex items-center">
+          <span className="w-28 text-right pr-2">Translation + rotation</span>
+          <CarreAvecFleche id="forward" />
         </div>
       </div>
       
