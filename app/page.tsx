@@ -15,10 +15,10 @@ export default function Home() {
     await animerOpacity();
   };
 
-  const animer = async (elementId:string, keyframes: Keyframe[]) => {
+  const animer = async (elementId:string, keyframes: Keyframe[], duration:number = ANIMATION_DURATION_MS, garderLesValeursFinales:boolean = false) => {
     const element = document.getElementById(elementId);
 
-    let animation = element?.animate(keyframes, { duration: ANIMATION_DURATION_MS });
+    let animation = element?.animate(keyframes, { duration: duration, fill: garderLesValeursFinales ? 'forwards' : 'none' });
     await animation?.finished;
   };
 
@@ -120,50 +120,48 @@ export default function Home() {
   };
 
   const animerAvecEase = async () => {
+    animerSansEase();
     animerEase1();
     animerEase2();
     animerEase3();
-    animerEase4();
+  };
+
+  const animerSansEase = async () => {
+    // L'easing d'un keyframe s'applique au segment qui part de ce keyframe
+    const translationKeyframes: Keyframe[] = [
+      { transform: 'translateX(0%)', easing: 'linear' },
+      { transform: 'translateX(200%)' }
+    ];
+
+    await animer(`ease0`, translationKeyframes, 4000, true);
   };
 
   const animerEase1 = async () => {
+    // L'easing d'un keyframe s'applique au segment qui part de ce keyframe
     const translationKeyframes: Keyframe[] = [
-      { transform: 'translateX(0%)'},
-      { transform: 'translateX(100%)' },
-      { transform: 'translateX(0%)'}
+      { transform: 'translateX(0%)', easing: 'ease-in' },
+      { transform: 'translateX(200%)' }
     ];
 
-    await animer(`ease1`, translationKeyframes);
+    await animer(`ease1`, translationKeyframes, 4000, true);
   };
 
   const animerEase2 = async () => {
     const translationKeyframes: Keyframe[] = [
-      { transform: 'translateX(0%)', easing: 'ease-in-out' },
-      { transform: 'translateX(100%)', easing: 'ease-in-out' },
-      { transform: 'translateX(0%)', easing: 'ease-in-out' }
+      { transform: 'translateX(0%)', easing: 'ease-out' },
+      { transform: 'translateX(200%)' }
     ];
 
-    await animer(`ease2`, translationKeyframes);
+    await animer(`ease2`, translationKeyframes, 4000, true);
   };
 
   const animerEase3 = async () => {
     const translationKeyframes: Keyframe[] = [
-      { transform: 'translateX(0%)', easing: 'ease-out' },
-      { transform: 'translateX(100%)', easing: 'ease-in-out' },
-      { transform: 'translateX(0%)', easing: 'ease-in' }
+      { transform: 'translateX(0%)', easing: 'ease-in-out' },
+      { transform: 'translateX(200%)' }
     ];
 
-    await animer(`ease3`, translationKeyframes);
-  };
-
-  const animerEase4 = async () => {
-    const translationKeyframes: Keyframe[] = [
-      { transform: 'translateX(0%)' },
-      { transform: 'translateX(100%)', easing: "steps(3, jump-none)" },
-      { transform: 'translateX(0%)' }
-    ];
-
-    await animer(`ease4`, translationKeyframes);
+    await animer(`ease3`, translationKeyframes, 4000, true);
   };
 
   // fill: 'forwards' garde l'état final de l'animation après sa fin
@@ -229,32 +227,34 @@ export default function Home() {
       </div>
 
       <div className="p-2">
-        <Button className="mr-2" onClick={animerAvecEase}>Comprendre le ease</Button>
-        <div className="flex items-center">
-          <span className="w-28 text-right pr-2">0.5 (par défaut)</span>
-          <CarreAvecFleche id="ease1" />
-        </div>
-        <div className="flex items-center">
-          <span className="w-28 text-right pr-2">0.75</span>
-          <CarreAvecFleche id="ease2" />
-        </div>
-        <div className="flex items-center">
-          <span className="w-28 text-right pr-2">0.9</span>
-          <CarreAvecFleche id="ease3" />
-        </div>
-        <div className="flex items-center">
-          <span className="w-28 text-right pr-2">Ease4 (steps)</span>
-          <CarreAvecFleche id="ease4" />
-        </div>
-      </div>
-
-      <div className="p-2">
         <Button className="mr-2" onClick={animerAvecFill}>Garder la position (forwards)</Button>
         <div className="flex items-center">
           <span className="w-28 text-right pr-2">Translation + rotation</span>
           <CarreAvecFleche id="forward" />
         </div>
       </div>
+
+      <div className="p-2">
+        <Button className="mr-2" onClick={animerAvecEase}>Comprendre le ease</Button>
+        <div className="flex items-center">
+          <span className="w-28 text-right pr-2">Sans Ease (linéaire)</span>
+          <CarreAvecFleche id="ease0" />
+        </div>
+        <div className="flex items-center">
+          <span className="w-28 text-right pr-2">Ease In</span>
+          <CarreAvecFleche id="ease1" />
+        </div>
+        <div className="flex items-center">
+          <span className="w-28 text-right pr-2">Ease Out</span>
+          <CarreAvecFleche id="ease2" />
+        </div>
+        <div className="flex items-center">
+          <span className="w-28 text-right pr-2">Ease In-Out</span>
+          <CarreAvecFleche id="ease3" />
+        </div>
+      </div>
+
+      
       
     </div>
   );
